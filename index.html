@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Nomad</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="app.css"/>
+        <link rel="stylesheet" href="fonts/stylesheet.css"/>
+        <script src="app/vendor/prefixfree.js"></script>
+        <script src="app/vendor/zepto.js"></script>
+        <script src="app/vendor/underscore.js"></script>
+        <script src="app/vendor/backbone.js"></script>
+        <script src="app/vendor/moment.js"></script>
+        <script src="app/vendor/handlebars.js"></script>
+        <script src="app/app.js"></script>
+        <script src="app/test.js"></script>
+    </head>
+    <body>
+        <h1>I O <img src="img/hu.png" alt="Hu"/>?</h1>
+        <nav>
+            <ul>
+                <li><a href="#activity">Activities</a></li>
+                <li><a href="#person">People</a></li>
+            </ul>
+        </nav>
+        <div id="content"></div>
+        <script type="text/x-handlebars-template" class="activity-list">
+            <input type="search" name="filter" placeholder="Filter activities" value="{{filter}}"/>
+            <h2>Activities</h2>
+            <ul>
+                {{#each activities}}
+                <li>
+                    <a href="#activity/edit/{{id}}">{{name}}</a>
+                    {{#if createdAt}}
+                    ({{formatDate createdAt}})
+                    {{/if}}
+                </li>
+                {{/each}}
+            </ul>
+        </script>
+        <script type="text/x-handlebars-template" class="activity-edit">
+            <h2>Activity</h2>
+            {{#with activity}}
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{name}}" />
+                <input type="submit" value="Save"/>
+            </form>
+            {{/with}}
+            <h3>IOUs</h3>
+            <ul class="ious">
+                {{#each transactions}}
+                    {{#ifEquals fromId toId}}
+                    <li><img src="{{from.avatar}}" alt="{{from.name}}"/> spent <strong>${{formatNumber amount}}</strong></li>
+                    {{else}}
+                    <li><img src="{{from.avatar}}" alt="{{from.name}}"/> owes <img src="{{to.avatar}}" alt="{{to.name}}"/> <strong>${{formatNumber amount}}</strong></li>
+                    {{/ifEquals}}
+                {{/each}}
+            </ul>
+        </script>
+        <script type="text/x-handlebars-template" class="person-list">
+            <h2>People</h2>
+            <ul class="people">
+                {{#each .}}
+                <li><img src="{{avatar}}" alt="{{name}}"/> <a href="#person/edit/{{id}}">{{name}}</a></li>
+                {{/each}}
+            </ul>
+        </script>
+        <script type="text/x-handlebars-template" class="person-edit">
+            <h2>Person</h2>
+            <form>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" value="{{name}}" />
+                <label for="avatar">Avatar:</label>
+                <input type="text" id="avatar" name="avatar" value="{{avatar}}" />
+                <input type="submit" value="Save"/>
+            </form>
+        </script>
+    </body>
+</html>

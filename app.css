@@ -1,0 +1,86 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* --- [ Main stylesheet ] --- */
+
+html { background: url(img/wood.jpg) top center; } /* Texture source: http://www.shareaec.com/images/medium/20547.jpg */
+body { margin: 1em; font: normal 125% CabinRegular; }
+em { font-family: CabinItalic; }
+strong { font-family: CabinBold; }
+
+h1, h2, h3 { font: bold 6em MatizRegular; }
+h1 { text-align: center; }
+h2 { font-size: 2em; }
+h3 { font-size: 1.5em; }
+h1 img { height: 0.75em; }
+p { margin-bottom: 1em; }
+
+input, select, textarea { font: inherit; }
+
+a, a:visited { color: #900; font-family: CabinBold; }
+
+nav { text-align: center; }
+nav li { display: inline-block; margin: 0 0.3em; padding: 0.2em 0.5em; border-radius: 0.2em; background: #900; }
+nav li a, nav li a:visited { color: white; }
+
+#content, nav { padding: 1em; margin-bottom: 1em; background: rgba(255,255,255, 0.8); border-radius: 0.75em; padding: 0.5em; box-shadow: 0 0.2em 0.8em rgba(0,0,0,0.8); }
+
+#content li { list-style: none; padding: 0.5em; margin: 0.5em 0; background: #900; border-radius: 0.3em; color: #f99; }
+#content li a { color: white; }
+
+#content ul.people li img, #content ul.ious li img { max-height: 3em; vertical-align: middle; border-radius:100%; overflow:hidden; }
+
+#content ul.ious li strong { color: white; }
+
+#content input[type=search] { float: right; width: 8em; }
+#content label { display: block; }
+
+@media screen and (max-width: 480px) {
+    body { font-size: 100%; }
+}
