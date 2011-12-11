@@ -83,9 +83,9 @@ nav li a, nav li a:visited { color: white; }
 #content input[type=search] { float: right; width: 8em; }
 #content label { display: block; }
 
-form input[type=text] { width: 100%; }
+form input[type=text] { width: 100%; box-sizing: border-box; }
 
-@media screen and (min-width: 640px) {
+@media screen and (min-width: 480px) {
     body { font-size: 120%; }
     #content ul li { float: left; box-sizing: border-box; width: 49%; margin: 0.5%;}
     

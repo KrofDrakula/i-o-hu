@@ -33,12 +33,12 @@ var Transaction = Backbone.Model.extend({
 
 var Total = Backbone.Model.extend({
     defaults: {
-        person: null,
-        spent: 0,
-        gave: 0,
-        received: 0,
-        ows: false,
-        net: 0
+        person   : null,
+        spent    : 0,
+        gave     : 0,
+        received : 0,
+        owes     : false,
+        net      : 0
     }
 });
 
@@ -275,7 +275,7 @@ var Router = Backbone.Router.extend({
                 person   : p.toJSON(),
                 gave     : gave,
                 received : received,
-                ows      : gave < received,
+                owes     : gave < received,
                 net      : Math.abs(gave - received)
             });
         });
