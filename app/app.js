@@ -31,6 +31,17 @@ var Transaction = Backbone.Model.extend({
     }
 });
 
+var Total = Backbone.Model.extend({
+    defaults: {
+        person: null,
+        spent: 0,
+        gave: 0,
+        received: 0,
+        ows: false,
+        net: 0
+    }
+});
+
 /*--[ Collections ]--*/
 var BaseCollection = Backbone.Collection.extend({
     getMaxId: function() {
@@ -54,7 +65,26 @@ var TransactionCollection = BaseCollection.extend({
         return new TransactionCollection(
             this.filter(function(t) { return t.get('activityId') == id; })
         );
+    },
+    getByFromId: function(id, own) {
+        own = !!own;
+        return new TransactionCollection(
+            this.filter(function(t) { return t.get('fromId') == id && (own? t.get('fromId') == t.get('toId') : true); })
+        );
+    },
+    getByToId: function(id, own) {
+        own = !!own;
+        return new TransactionCollection(
+            this.filter(function(t) { return t.get('toId') == id && (own? t.get('fromId') == t.get('toId') : true); })
+        );
+    },
+    sum: function() {
+        return this.reduce(function(u, v) { return u + v.get('amount'); }, 0);
     }
+});
+
+var TotalCollection = BaseCollection.extend({
+    model: Total
 });
 
 /*--[ Views ]--*/
@@ -115,7 +145,7 @@ var ActivityEditView = BaseView.extend({
     },
 
     events: {
-        'click input[type=submit]': 'save'
+        'submit form': 'save'
     },
 
     getViewModel: function() {
@@ -150,7 +180,7 @@ var PersonEditView = BaseView.extend({
     },
 
     events: {
-        'click input[type=submit]': 'save'
+        'submit form': 'save'
     },
 
     save: function(ev) {
@@ -158,6 +188,10 @@ var PersonEditView = BaseView.extend({
         this.model.set({ name: this.$('[name=name]').val(), avatar: this.$('[name=avatar]').val() });
         this.trigger('update');
     }
+});
+
+var TotalsView = BaseView.extend({
+    templateName: 'totals'
 });
 
 /*--[ Router ]--*/
@@ -171,6 +205,7 @@ var Router = Backbone.Router.extend({
         'person?filter=:filter'   : 'personList',
         'person/edit'             : 'personEdit',
         'person/edit/:id'         : 'personEdit',
+        'totals'                  : 'totals',
         ''                        : 'index'
     },
     _updateNav: function() {
@@ -229,6 +264,25 @@ var Router = Backbone.Router.extend({
         var self = this;
         view.bind('update', function() { self.navigate('person', true); });
         view.render();
+    },
+    totals: function() {
+        var totals = new TotalCollection();
+        totals.comparator = function(t) { return t.get('gave') - t.get('received'); };
+        App.people.each(function(p) {
+            var gave = App.transactions.getByFromId(p.id).sum();
+            var received = App.transactions.getByToId(p.id).sum();
+            totals.add({
+                person   : p.toJSON(),
+                gave     : gave,
+                received : received,
+                ows      : gave < received,
+                net      : Math.abs(gave - received)
+            });
+        });
+        new TotalsView({
+            collection : totals,
+            el         : this._getViewContainer()
+        }).render();
     }
 });
 
@@ -247,9 +301,9 @@ var App = {
 function init() {
     App.router = new Router;
 
-    $('script[type="text/x-handlebars-template"]').each(function() {
+    $('body script[type="text/x-handlebars-template"]').each(function() {
         App.templates[$(this).attr('class')] = Handlebars.compile($(this).html());
-    });
+    }).remove();
     
     Backbone.history.start();
 }
@@ -272,6 +326,11 @@ Handlebars.registerHelper('formatDate', function(date) {
 
 Handlebars.registerHelper('ifEquals', function(v1, v2, options) {
     if (v1 == v2) return options.fn(this, options);
+    return options.inverse(this, options);
+});
+
+Handlebars.registerHelper('ifGreater', function(v1, v2, options) {
+    if (parseFloat(v1, 10) > parseFloat(v2, 10)) return options.fn(this, options);
     return options.inverse(this, options);
 });
 
