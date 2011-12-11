@@ -123,7 +123,7 @@ var ActivityListView = BaseView.extend({
     },
 
     events: {
-        'change input[type=search]': 'updateFilter'
+        'change input[type=search]' : 'updateFilter'
     },
 
     getViewModel: function() {

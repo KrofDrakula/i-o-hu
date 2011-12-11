@@ -82,7 +82,7 @@
             <h2>Totals</h2>
             <ul class="ious">
                 {{#each .}}
-                    {{#if ows}}
+                    {{#if owes}}
                         <li><img src="{{person.avatar}}" alt="{{person.name}}"/> owes <strong>${{formatNumber net}}</strong>
                     {{else}}
                         <li><img src="{{person.avatar}}" alt="{{person.name}}"/> is owed <strong>${{formatNumber net}}</strong>
