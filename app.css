@@ -63,25 +63,25 @@ p { margin-bottom: 1em; }
 
 input, select, textarea { font: inherit; }
 
-a, a:visited { color: #900; font-family: CabinBold; }
+a { color: #900; font-family: CabinBold; }
 
 nav { text-align: center; }
 nav li { display: inline-block; margin: 0 0.3em; padding: 0.2em 0.5em; border-radius: 0.2em; background: #900; }
-nav li a, nav li a:visited { color: white; }
+nav li a { color: white; }
 
 #content, nav { padding: 1em; margin-bottom: 1em; background: rgba(255,255,255, 0.8); border-radius: 0.75em; padding: 0.5em; box-shadow: 0 0.2em 0.8em rgba(0,0,0,0.8); }
 
-#content li { list-style: none; padding: 0.5em; margin: 0.5em 0; background: #900; border-radius: 0.3em; color: #f99; }
-#content li a { color: white; }
+li { list-style: none; padding: 0.5em; margin: 0.5em 0; background: #900; border-radius: 0.3em; color: #f99; }
+li a { color: white; }
 
-#content ul:after { content: '.'; height: 0; clear: both; display: block; visibility: hidden; }
+ul:after { content: '.'; height: 0; clear: both; display: block; visibility: hidden; }
 
-#content ul.people li img, #content ul.ious li img { max-height: 3em; vertical-align: middle; border-radius:100%; overflow:hidden; }
+ul.people li img, ul.ious li img { max-height: 3em; vertical-align: middle; border-radius:100%; overflow:hidden; }
 
-#content ul.ious li strong { color: white; }
+ul.ious li strong { color: white; }
 
-#content input[type=search] { float: right; width: 8em; }
-#content label { display: block; }
+input[type=search] { float: right; width: 8em; }
+label { display: block; }
 
 form input[type=text] { width: 100%; box-sizing: border-box; }
 
